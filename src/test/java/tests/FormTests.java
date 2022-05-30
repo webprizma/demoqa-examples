@@ -76,6 +76,10 @@ public class FormTests {
         //отправляем форму
         $("#submit").scrollTo().click();
 
+        $(".modal-header").shouldHave(
+                Condition.text("Thanks for submitting the form")
+        );
+
         //проверка введенных данных
         $(".modal-body").shouldHave(
                 Condition.text(firstName),
