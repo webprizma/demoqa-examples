@@ -76,6 +76,7 @@ public class FormTests {
         //отправляем форму
         $("#submit").scrollTo().click();
 
+        //проверка открытия модального окна
         $(".modal-header").shouldHave(text("Thanks for submitting the form"));
 
         //проверка введенных данных
