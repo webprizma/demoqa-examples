@@ -84,7 +84,6 @@ public class FormTests {
 
         //проверка введенных данных
         $(".modal-body").shouldHave(
-                Condition.text("Thanks for submitting the form"),
                 Condition.text(firstName),
                 Condition.text(lastName),
                 Condition.text(email),
