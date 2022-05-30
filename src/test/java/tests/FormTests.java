@@ -1,12 +1,12 @@
 package tests;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -76,22 +76,20 @@ public class FormTests {
         //отправляем форму
         $("#submit").scrollTo().click();
 
-        $(".modal-header").shouldHave(
-                Condition.text("Thanks for submitting the form")
-        );
+        $(".modal-header").shouldHave(text("Thanks for submitting the form"));
 
         //проверка введенных данных
         $(".modal-body").shouldHave(
-                Condition.text(firstName),
-                Condition.text(lastName),
-                Condition.text(email),
-                Condition.text(gender),
-                Condition.text(phone),
-                Condition.text(birthDate),
-                Condition.text(subject),
-                Condition.text(hobby),
-                Condition.text(fileName),
-                Condition.text(stateCity)
+                text(firstName),
+                text(lastName),
+                text(email),
+                text(gender),
+                text(phone),
+                text(birthDate),
+                text(subject),
+                text(hobby),
+                text(fileName),
+                text(stateCity)
         );
     }
 }
