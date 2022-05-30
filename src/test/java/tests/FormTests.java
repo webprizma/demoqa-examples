@@ -12,17 +12,17 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class FormTests {
     @BeforeAll
-    static void BeforeAll() {
+    static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1028x768";
     }
     @Test
-    void FormTest() {
+    void formTest() {
         open("/automation-practice-form");
 
         //скрыть мешающие элементы
         executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#close-fixedban').remove()");
+        executeJavaScript("$('#fixedban').remove()");
 
         //переменные для теста
         String firstName = "Yuri";
@@ -56,9 +56,7 @@ public class FormTests {
 
         //кликаем по календарю
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").click();
         $(".react-datepicker__month-select").selectOption(birthMonth);
-        $(".react-datepicker__year-select").click();
         $(".react-datepicker__year-select").selectOption(birthYear);
         $(".react-datepicker__day--0" + birthDay).click();
 
