@@ -62,7 +62,6 @@ public class FormTests {
         $(".react-datepicker__year-select").selectOption(birthYear);
         $(".react-datepicker__day--0" + birthDay).click();
 
-        $("#subjectsInput").click();
         $("#subjectsInput").sendKeys(subject); //setValue крашит апу
         $("#subjectsInput").pressEnter();
 
