@@ -1,6 +1,7 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.selector.ByText;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -86,17 +87,35 @@ public class FormTests {
         $(".modal-header").shouldHave(text("Thanks for submitting the form"));
 
         //проверка введенных данных
-        $(".modal-body").shouldHave(
-                text(firstName),
-                text(lastName),
-                text(email),
-                text(gender),
-                text(phone),
-                text(birthDate),
-                text(subject),
-                text(hobby),
-                text(fileName),
-                text(stateCity)
-        );
+        //$(".modal-body").shouldHave(
+        //        text(firstName),
+        //        text(lastName),
+        //        text(email),
+        //        text(gender),
+        //        text(phone),
+        //        text(birthDate),
+        //        text(subject),
+        //        text(hobby),
+        //        text(fileName),
+        //        text(address),
+        //        text(stateCity)
+        //); //проверка наличия данных в форме без учета ячеек
+
+        //$(".table-responsive").$(byText("Date of Birth")).sibling(0).shouldHave(text(birthDate)); //проверка с учетом ячейки, поиск соседа (пример - дата рождения), описан в методе checkTable
+        checkTable("Student Name", firstName);
+        checkTable("Student Name", lastName);
+        checkTable("Student Email", email);
+        checkTable("Gender", gender);
+        checkTable("Mobile", phone);
+        checkTable("Date of Birth", birthDate);
+        checkTable("Subjects", subject);
+        checkTable("Hobbies", hobby);
+        checkTable("Picture", fileName);
+        checkTable("Address", address);
+        checkTable("State and City", stateCity);
+    }
+
+    void checkTable(String key, String value) {
+        $(".table-responsive").$(byText(key)).sibling(0).shouldHave(text(value));
     }
 }
