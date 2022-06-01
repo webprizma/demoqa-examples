@@ -43,28 +43,36 @@ public class FormTests {
         String birthDay = "08";
         String birthDate = birthDay + " " + birthMonth + "," + birthYear;  //"08 March,1987"
 
-        //файл для формы
+        //файл для формы .uploadFile
         File uploadedFile = new File("src/test/resources/1.png");
         String fileName = uploadedFile.getName();
+
+        //файл для формы .uploadFromClasspath
+        String fileNameFromClasspath = "1.png";
 
         //подстановка
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
         $("#genterWrapper").$(byText(gender)).click();
+        //$("#genterWrapper").$(byText(gender)).parent().click(); // родитель
+
         $("#userNumber").setValue(phone);
 
         //кликаем по календарю
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption(birthMonth);
         $(".react-datepicker__year-select").selectOption(birthYear);
-        $(".react-datepicker__day--0" + birthDay).click();
+        $(".react-datepicker__day--0" + birthDay + ":not(react-datepicker__day--outside-month").click();  //css :not() ^_^
 
         $("#subjectsInput").sendKeys(subject); //setValue крашит апу
         $("#subjectsInput").pressEnter();
 
         $("#hobbiesWrapper").$(byText(hobby)).click();
-        $("#uploadPicture").uploadFile(uploadedFile);
+
+        //$("#uploadPicture").uploadFile(uploadedFile);
+        $("#uploadPicture").uploadFromClasspath(fileNameFromClasspath);
+
         $("#currentAddress").setValue(address);
         $("#state").scrollTo().click();
         $("#state").$(byText(state)).click();
