@@ -8,7 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class ResultTableComponent {
     SelenideElement resultTable = $(".table-responsive"),
-            resultTableHeader =  $(".modal-header");
+            resultTableHeader = $(".modal-header");
+
     public ResultTableComponent checkResult(String key, String value) {
         //resultTable.$(byText(key)).parent().shouldHave(text(value));
         resultTable.$(byText(key)).sibling(0).shouldHave(text(value));
@@ -21,7 +22,6 @@ public class ResultTableComponent {
 
         return this;
     }
-
 
 
 }

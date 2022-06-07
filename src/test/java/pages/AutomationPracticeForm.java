@@ -132,11 +132,13 @@ public class AutomationPracticeForm {
 
         return this;
     }
+
     public AutomationPracticeForm checkFormOpened() {
         resultTableComponent.checkResultTableHeader();
 
         return this;
     }
+
     public AutomationPracticeForm checkResult(String key, String value) {
         resultTableComponent.checkResult(key, value);
 
