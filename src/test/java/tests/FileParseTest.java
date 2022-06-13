@@ -7,13 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.json.Json;
 import tests.domain.Person;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -53,7 +49,7 @@ public class FileParseTest {
         CSVReader csvReader = new CSVReader(new InputStreamReader(is, UTF_8));
         List<String[]> csv = csvReader.readAll();
         assertThat(csv).contains(
-                new String[] {"sdhgdfhjdre", "dshghgdshg", "testData"}
+                new String[]{"sdhgdfhjdre", "dshghgdshg", "testData"}
         );
     }
 
@@ -63,8 +59,22 @@ public class FileParseTest {
         ZipInputStream zis = new ZipInputStream(is);
         ZipEntry entry;
         while ((entry = zis.getNextEntry()) != null) {
-            assertThat(entry.getName()).isEqualTo("1.txt");
-            //вытащить содержимое 1.txt и прочитать
+            String fileName = entry.getName();
+            assertThat(fileName).isEqualTo("1.txt");
+
+            //достаем файл из архива
+            FileOutputStream fout = new FileOutputStream("build/resources/test/" + entry.getName());
+            for (int c = zis.read(); c != -1; c = zis.read()) {
+                fout.write(c);
+            }
+            fout.flush();
+            zis.closeEntry();
+            fout.close();
+
+            //проверяем содержимое файла
+            FileInputStream fileInZIP = new FileInputStream("build/resources/test/" + entry.getName());
+            byte[] fileContent = fileInZIP.readAllBytes();
+            assertThat(new String(fileContent, UTF_8)).contains("привет");
         }
     }
 
