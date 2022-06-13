@@ -1,0 +1,8 @@
+{
+  "name": "Yuri",
+  "lastname": "Kulagin",
+  "passport": {
+    "number": 1234
+  },
+  "goodBoy": true
+}
