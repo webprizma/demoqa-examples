@@ -15,6 +15,7 @@ public class TestBase {
     public static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1028x768";
+        //Configuration.headless = true;
         System.out.println("Тестирование запущено");
     }
 

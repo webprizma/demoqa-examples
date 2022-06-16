@@ -167,6 +167,4 @@ public class FormTests extends TestBase {
                 .checkResult("Gender", expectedResult)
                 .checkResult("Mobile", testData.phone);
     }
-
-
 }
