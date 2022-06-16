@@ -1,0 +1,26 @@
+{
+  "Name":"Craig",
+  "Age":10,
+  "BookInterests":[
+    {
+      "Book":"The Kite Runner",
+      "Author":"Khaled Hosseini"
+    },
+    {
+      "Book":"Harry Potter",
+      "Author":"J. K. Rowling"
+    }
+  ],
+  "FoodInterests":{
+    "Breakfast":[
+      {
+        "Bread":"Whole wheat",
+        "Beverage":"Fruit juice"
+      },
+      {
+        "Sandwich":"Vegetable Sandwich",
+        "Beverage":"Coffee"
+      }
+    ]
+  }
+}

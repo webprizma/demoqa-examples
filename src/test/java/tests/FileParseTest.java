@@ -1,14 +1,18 @@
 package tests;
 
 import com.codeborne.pdftest.PDF;
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.xlstest.XLS;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.json.JsonInput;
 import tests.domain.Person;
 
 import java.io.*;
@@ -24,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FileParseTest {
 
     ClassLoader classLoader = FileParseTest.class.getClassLoader();
+
     @Disabled
     @Test
     void pdfTest() throws Exception {
@@ -46,6 +51,7 @@ public class FileParseTest {
                         .getStringCellValue()
         ).contains("Цена");
     }
+
     @Disabled
     @Test
     void csvTest() throws Exception {
@@ -56,6 +62,7 @@ public class FileParseTest {
                 new String[]{"sdhgdfhjdre", "dshghgdshg", "testData"}
         );
     }
+
     @Disabled
     @Test
     void zipTest() throws Exception {
@@ -79,6 +86,7 @@ public class FileParseTest {
             assertThat(new String(fileContent, UTF_8)).contains("привет");
         }
     }
+
     @Disabled
     @Test
     void jsonTest() {
@@ -89,6 +97,7 @@ public class FileParseTest {
         assertThat(jsonObject.get("goodBoy").getAsBoolean()).isEqualTo(true);
         assertThat(jsonObject.get("passport").getAsJsonObject().get("number").getAsInt()).isEqualTo(1234);
     }
+
     @Disabled
     @Test
     void jsonTestAlt() {
@@ -100,9 +109,7 @@ public class FileParseTest {
         assertThat(jsonObject.getPassport().getNumber()).isEqualTo(1234);
     }
 
-    //Реализовать чтение и проверку содержимого каждого файла из архива testArchive.zip
-
-    @Disabled
+    @DisplayName("Реализовать чтение и проверку содержимого каждого файла из архива testArchive.zip")
     @Test
     void testArchiveTest() throws Exception {
         InputStream is = classLoader.getResourceAsStream("testArchive.zip");
@@ -119,7 +126,7 @@ public class FileParseTest {
             fout.close();
 
             FileInputStream fileInZIP = new FileInputStream("build/resources/test/testArchive/" + fileName);
-            if(fileName.contains("csv")) {
+            if (fileName.contains("csv")) {
                 CSVReader csvReader = new CSVReader(new InputStreamReader(fileInZIP, UTF_8));
                 List<String[]> csv = csvReader.readAll();
                 assertThat(csv).contains(new String[]{"johnson81;4081;Craig;Johnson"}
@@ -141,20 +148,16 @@ public class FileParseTest {
             }
         }
     }
-    //Реализовать разбор json  файла библиотекой Jackson https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.13.1
-    //Придумать реальный объект и описать его в виде json
-    //В идеале json должен содержать массив
-
+    @DisplayName("Реализовать разбор json файла библиотекой Jackson")
     @Test
-    void jsonJackson() {
+    void jsonJackson() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
         InputStream is = classLoader.getResourceAsStream("myExample.json");
-//        Gson gson = new Gson();
-//        JsonObject jsonObject = gson.fromJson(new InputStreamReader(is), JsonObject.class);
-//        assertThat(jsonObject.get("name").getAsString()).isEqualTo("Yuri");
-//        assertThat(jsonObject.get("goodBoy").getAsBoolean()).isEqualTo(true);
-//        assertThat(jsonObject.get("passport").getAsJsonObject().get("number").getAsInt()).isEqualTo(1234);
+        JsonNode jsonNode = objectMapper.readTree(new InputStreamReader(is, UTF_8));
+
+        assertThat(jsonNode.get("Name").asText()).isEqualTo("Craig");
+        assertThat(jsonNode.withArray("BookInterests").findValue("Book").asText()).isEqualTo("The Kite Runner");
+        assertThat((jsonNode.findValue("FoodInterests")).withArray("Breakfast").findValue("Bread").asText()).isEqualTo("Whole wheat");
 
     }
-
-
 }
