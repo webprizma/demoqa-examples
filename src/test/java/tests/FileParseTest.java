@@ -2,17 +2,17 @@ package tests;
 
 import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.codeborne.xlstest.XLS;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.json.JsonInput;
 import tests.domain.Person;
 
 import java.io.*;
@@ -148,6 +148,7 @@ public class FileParseTest {
             }
         }
     }
+
     @DisplayName("Реализовать разбор json файла библиотекой Jackson")
     @Test
     void jsonJackson() throws Exception {
@@ -160,4 +161,5 @@ public class FileParseTest {
         assertThat((jsonNode.findValue("FoodInterests")).withArray("Breakfast").findValue("Bread").asText()).isEqualTo("Whole wheat");
 
     }
+
 }
