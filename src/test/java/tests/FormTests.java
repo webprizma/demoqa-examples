@@ -27,6 +27,7 @@
 package tests;
 
 import enums.Gender;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,23 +35,24 @@ import org.junit.jupiter.params.provider.*;
 
 import java.util.stream.Stream;
 
+@Owner("kulaginyv")
+@Feature("Form filling tests")
 public class FormTests extends TestBase {
-
+    @Test
     @DisplayName("Заполнение ВСЕХ полей и проверка наличия ВСЕХ введенных значений в модальном окне")
     //@Disabled("Not needed right now")
-    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Заполнение ВСЕХ полей и проверка наличия ВСЕХ введенных значений в модальном окне")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void fullTest() {
-        automationPracticeForm
-                .setFullName(testData.firstName, testData.lastName)
-                //.setFirstName(firstName)
-                //.setLastName(lastName)
+        automationPracticeForm.setFullName(testData.firstName, testData.lastName)
                 .setEmail(testData.email)
                 .setGender(testData.gender)
                 .setPhoneNumber(testData.phone)
                 .setDateOfBirth(testData.birthMonth,
                         testData.birthYear,
                         testData.birthDay)
-                //.setDateOfBirthWithKeys(birthMonth, birthYear, birthDay)
                 .setSubjects(testData.subject)
                 .setHobby(testData.hobby)
                 .uploadFile(testData.fileName)
@@ -72,9 +74,13 @@ public class FormTests extends TestBase {
                 .checkResult("State and City", testData.state + " " + testData.city);
     }
 
+    @Test
     @DisplayName("Заполнение только необходимых для отправки формы полей и проверка, что эти данные попали в результирующую форму")
     //@Disabled("Not needed right now")
-    @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Заполнение только необходимых для отправки формы полей и проверка, что эти данные попали в результирующую форму")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void onlyRequiredFieldsTest() {
         automationPracticeForm
                 .setFullName(testData.firstName, testData.lastName)
@@ -88,13 +94,17 @@ public class FormTests extends TestBase {
                 .checkResult("Mobile", testData.phone);
     }
 
-    @DisplayName("Parameterized Test With Value Source")
     @ParameterizedTest(name = "При вводе номера телефона {0} в результатах (форме) должен быть номер телефона {0}")
     @ValueSource(strings = {
             "9991234567",
             "9091234567",
             "9631234567"
     })
+    @DisplayName("Parameterized Test With Value Source")
+    @Severity(SeverityLevel.MINOR)
+    @Story("Parameterized Test With Value Source")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void parameterizedTestWithValueSource(String valueSource) {
         automationPracticeForm
                 .setFullName(testData.firstName, testData.lastName)
@@ -108,13 +118,17 @@ public class FormTests extends TestBase {
                 .checkResult("Mobile", valueSource);
     }
 
-    @DisplayName("Parameterized Test With CSV Source")
     @ParameterizedTest(name = "При вводе имени {0}, фамилии {1}, пола {2} и телефона {3} в результатах (форме) должны быть имя {0}, фамилия {1}, пол {2} и телефон {3}")
     @CsvSource(value = {
             "Ivan, Ivanov, Male, 9991234567",
             "Petr, Petrov, Other, 9993214567",
             "Oksana, Brilski, Female, 9991112233"
     })
+    @DisplayName("Parameterized Test With CSV Source")
+    @Severity(SeverityLevel.MINOR)
+    @Story("Parameterized Test With CSV Source")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void parameterizedTestWithCSVSource(String firstName, String lastName, String gender, String phone) {
         automationPracticeForm
                 .setFullName(firstName, lastName)
@@ -128,9 +142,14 @@ public class FormTests extends TestBase {
                 .checkResult("Mobile", phone);
     }
 
-    @DisplayName("Parameterized Test With Enum Source")
+
     @ParameterizedTest(name = "При выборе пола {0} в результатах (форме) пол должен быть {0}")
     @EnumSource(Gender.class)
+    @DisplayName("Parameterized Test With Enum Source")
+    @Severity(SeverityLevel.MINOR)
+    @Story("Parameterized Test With Enum Source")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void parameterizedTestWithEnumSource(Gender gender) {
         automationPracticeForm
                 .setFullName(testData.firstName, testData.lastName)
@@ -152,9 +171,14 @@ public class FormTests extends TestBase {
         );
     }
 
-    @DisplayName("Parameterized Test With Method Source")
+
     @ParameterizedTest(name = "При выборе пола {0} в результатах (форме) пол должен быть {1}")
     @MethodSource(value = "methodSource")
+    @DisplayName("Parameterized Test With Method Source")
+    @Severity(SeverityLevel.MINOR)
+    @Story("Parameterized Test With Method Source")
+    @Description("Функциональный тест")
+    @Link(name = "demoqa.com", url = "https://demoqa.com/automation-practice-form")
     public void parameterizedTestWithMethodSource(String searchData, String expectedResult) {
         automationPracticeForm
                 .setFullName(testData.firstName, testData.lastName)
