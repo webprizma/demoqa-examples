@@ -31,8 +31,6 @@ public class TestBase {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-        OperaOptions options = new OperaOptions();
-        capabilities.setCapability(OperaOptions.CAPABILITY, options);
         Configuration.browserCapabilities = capabilities;
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
@@ -48,7 +46,7 @@ public class TestBase {
         Attachments.addPageSource();
         Attachments.addVideo();
         Attachments.addScreenshot();
-        if (!System.getProperty("browser").equals("firefox")) { // нужен workaround для сбора логов из Firefox
+        if (!System.getProperty("browser").equals("firefox")) {
             Attachments.browserConsoleLogs();
         }
     }
