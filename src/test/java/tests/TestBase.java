@@ -45,7 +45,7 @@ public class TestBase {
         Attachments.addPageSource();
         Attachments.addVideo();
         Attachments.addScreenshot();
-        if (Configuration.browser != "firefox") { // нужен workaround для сбора логов из Firefox
+        if (!System.getProperty("browser").equals("firefox")) { // нужен workaround для сбора логов из Firefox
             Attachments.browserConsoleLogs();
         }
     }
