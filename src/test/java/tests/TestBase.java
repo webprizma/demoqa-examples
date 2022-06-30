@@ -13,7 +13,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.AutomationPracticeForm;
 
 public class TestBase {
-    static CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
+    public static CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
 
     AutomationPracticeForm automationPracticeForm = new AutomationPracticeForm();
     TestData testData = new TestData();
