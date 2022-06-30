@@ -2,7 +2,6 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import com.codeborne.selenide.webdriver.WebDriverFactory;
 import config.CredentialsConfig;
 import io.qameta.allure.selenide.AllureSelenide;
 import jenkins.Attachments;
@@ -10,8 +9,6 @@ import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.AutomationPracticeForm;
 
@@ -23,7 +20,7 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.baseUrl = config.baseURL();
         Configuration.remote = String.format("https://%s:%s@%s", config.login(), config.password(), System.getProperty("remote"));
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("version", "100");
