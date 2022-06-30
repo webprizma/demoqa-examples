@@ -23,10 +23,10 @@ public class TestBase {
         String login = config.login();
         String password = config.password();
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.remote = "https://" + login + ":" + password + "@selenoid.autotests.cloud/wd/hub";
-        System.getProperty("browser", "chrome");
-        System.getProperty("version", "101");
-        System.getProperty("windowSize", "1920x1080");
+        Configuration.remote = "https://" + login + ":" + password + "@" + System.getProperty("remote");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("version", "101");
+        Configuration.browserSize = System.getProperty("windowSize", "1920x1080");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
