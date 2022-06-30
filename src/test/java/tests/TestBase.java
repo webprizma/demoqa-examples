@@ -25,7 +25,7 @@ public class TestBase {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.remote = "https://" + login + ":" + password + "@" + System.getProperty("remote");
         Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserVersion = System.getProperty("version", "101");
+        Configuration.browserVersion = System.getProperty("version", "100");
         Configuration.browserSize = System.getProperty("windowSize", "1920x1080");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
@@ -45,6 +45,8 @@ public class TestBase {
         Attachments.addPageSource();
         Attachments.addVideo();
         Attachments.addScreenshot();
-        Attachments.browserConsoleLogs();
+        if (Configuration.browser != "firefox") { // нужен workaround для сбора логов из Firefox
+            Attachments.browserConsoleLogs();
+        }
     }
 }
