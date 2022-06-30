@@ -23,10 +23,8 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        String login = config.login();
-        String password = config.password();
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.remote = "https://" + login + ":" + password + "@" + System.getProperty("remote");
+        Configuration.remote = String.format("https://%s:%s@%s", config.login(), config.password(), System.getProperty("remote"));
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("version", "100");
         Configuration.browserSize = System.getProperty("windowSize", "1920x1080");
