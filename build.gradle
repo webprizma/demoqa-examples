@@ -10,15 +10,20 @@ repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.18.1",
+    selenideVersion = "6.6.4",
+    junitVersion = "5.8.2",
+    slf4jVersion = "1.7.36"
+
 allure {
     report {
-        version.set("2.17.3") //версия Allure Report (https://github.com/allure-framework/allure2)
+        version.set(allureVersion) //версия Allure Report (https://github.com/allure-framework/allure2)
     }
     adapter {
         aspectjWeaver.set(true) // обработка аннотации @Step
         frameworks {
             junit5 {
-                adapterVersion.set("2.17.3") //версия Allure JUnit5 (https://github.com/allure-framework/allure-java)
+                adapterVersion.set(allureVersion) //версия Allure JUnit5 (https://github.com/allure-framework/allure-java)
             }
         }
     }
@@ -26,28 +31,52 @@ allure {
 
 dependencies {
     testImplementation (
-            'org.junit.jupiter:junit-jupiter:5.8.2',
-            'com.codeborne:selenide:6.6.3',
-            'org.slf4j:slf4j-simple:1.7.36',
+            "org.junit.jupiter:junit-jupiter:$junitVersion",
+            "com.codeborne:selenide:$selenideVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "org.slf4j:slf4j-simple:$slf4jVersion",
+            'org.aeonbits.owner:owner:1.0.12',
             "com.github.javafaker:javafaker:1.0.2",
             'org.assertj:assertj-core:3.23.1',
             'com.codeborne:pdf-test:1.7.0',
             'com.codeborne:xls-test:1.4.3',
             'com.opencsv:opencsv:5.6',
-            'com.fasterxml.jackson.core:jackson-databind:2.0.1',
-            "io.qameta.allure:allure-selenide:2.17.3",
+            'com.fasterxml.jackson.core:jackson-databind:2.13.3',
             'com.google.code.gson:gson:2.9.0'
     )
-
-//    testImplementation ('com.codeborne:xls-test:1.5.0') {
-//        exclude group: 'org.apache.poi'
-//    }
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-test {
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
     useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+task primary_test(type: Test) {
+    useJUnitPlatform{
+        includeTags "primary"
+    }
+}
+
+task secondary_test(type: Test) {
+    useJUnitPlatform{
+        includeTags "secondary"
+        systemProperties(System.getProperties())
+    }
+}
+
+task alternative_test(type: Test) {
+    useJUnitPlatform{
+        includeTags "alternative"
+    }
 }

@@ -29,6 +29,7 @@ package tests;
 import enums.Gender;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
@@ -39,6 +40,7 @@ import java.util.stream.Stream;
 @Feature("Form filling tests")
 public class FormTests extends TestBase {
     @Test
+    @Tag("primary")
     @DisplayName("Заполнение ВСЕХ полей и проверка наличия ВСЕХ введенных значений в модальном окне")
     //@Disabled("Not needed right now")
     @Severity(SeverityLevel.NORMAL)
@@ -75,6 +77,7 @@ public class FormTests extends TestBase {
     }
 
     @Test
+    @Tag("secondary")
     @DisplayName("Заполнение только необходимых для отправки формы полей и проверка, что эти данные попали в результирующую форму")
     //@Disabled("Not needed right now")
     @Severity(SeverityLevel.CRITICAL)
@@ -95,6 +98,7 @@ public class FormTests extends TestBase {
     }
 
     @ParameterizedTest(name = "При вводе номера телефона {0} в результатах (форме) должен быть номер телефона {0}")
+    @Tag("alternative")
     @ValueSource(strings = {
             "9991234567",
             "9091234567",
@@ -119,6 +123,7 @@ public class FormTests extends TestBase {
     }
 
     @ParameterizedTest(name = "При вводе имени {0}, фамилии {1}, пола {2} и телефона {3} в результатах (форме) должны быть имя {0}, фамилия {1}, пол {2} и телефон {3}")
+    @Tag("alternative")
     @CsvSource(value = {
             "Ivan, Ivanov, Male, 9991234567",
             "Petr, Petrov, Other, 9993214567",
@@ -144,6 +149,7 @@ public class FormTests extends TestBase {
 
 
     @ParameterizedTest(name = "При выборе пола {0} в результатах (форме) пол должен быть {0}")
+    @Tag("alternative")
     @EnumSource(Gender.class)
     @DisplayName("Parameterized Test With Enum Source")
     @Severity(SeverityLevel.MINOR)
@@ -173,6 +179,7 @@ public class FormTests extends TestBase {
 
 
     @ParameterizedTest(name = "При выборе пола {0} в результатах (форме) пол должен быть {1}")
+    @Tag("alternative")
     @MethodSource(value = "methodSource")
     @DisplayName("Parameterized Test With Method Source")
     @Severity(SeverityLevel.MINOR)
